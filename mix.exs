@@ -30,16 +30,16 @@ defmodule Verk.Mixfile do
 
   defp deps do
     [
-      {:redix, "~> 0.8"},
+      {:redix, "~> 1.2"},
       {:jason, "~> 1.0"},
       {:poolboy, "~> 1.5"},
-      {:confex, "~> 3.3"},
+      {:confex, "~> 3.5"},
       {:gen_stage, "~> 1.0"},
-      {:credo, "~> 0.9", only: [:dev, :test]},
+      {:credo, "~> 1.6", only: [:dev, :test]},
       {:earmark, "~> 1.0", only: :dev},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:coverex, "== 1.5.0", only: :test},
-      {:mimic, "~> 0.2", only: :test}
+      {:mimic, "~> 1.7", only: :test}
     ]
   end
 
