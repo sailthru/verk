@@ -51,7 +51,9 @@ defmodule Verk.WorkerTest do
         reason: nil
       }
 
-      assert_receive {:"$gen_cast", {:failed, ^worker, "job_id", ^exception, _}}
+      assert_receive {:"$gen_cast",
+                      {:failed, ^worker, "job_id", ^exception,
+                       [{TestWorkerNoExist, :perform, _, _} | _]}}
     end
 
     test "cast perform runs the specified module with the args failing" do
@@ -60,7 +62,12 @@ defmodule Verk.WorkerTest do
       exception = ArgumentError.exception("invalid argument arg1")
       assert handle_cast({:perform, job, worker}, :state) == {:stop, :failed, :state}
 
-      assert_receive {:"$gen_cast", {:failed, ^worker, "job_id", ^exception, _}}
+      assert_receive {:"$gen_cast",
+                      {:failed, ^worker, "job_id", ^exception,
+                       [{FailWorker, :perform, 1, location} | _]}}
+
+      assert location[:file]
+      assert is_integer(location[:line])
     end
 
     test "cast perform accessing the job" do
